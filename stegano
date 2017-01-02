@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# Stegano
+# Embed data in files using steganography.
+#
+# Copyright (C) Kyle Brumm <http://kylebrumm.com>
+
+# Display the help text
+usage() {
+cat <<EOF
+
+Stegano
+
+Embed data in files using steganography.
+
+Usage:
+    $ stegano
+
+EOF
+exit 0
+}
+
+# Check if help info should be displayed
+if [ "$1" = "-h" -o "$1" = "--help" ]; then
+    usage
+fi
+
+# Colors
+RED=$(tput setaf 1);
+GREEN=$(tput setaf 2);
+YELLOW=$(tput setaf 3);
+WHITE=$(tput setaf 7);
+RESET=$(tput sgr0);
+
+# Get embed file
+while true; do
+    read -ep "Embed file: " EMBED_FILE
+    [ -z "$EMBED_FILE" ] || break
+done
+
+# Get data file
+while true; do
+    read -ep "Data file: " DATA_FILE
+    [ -z "$DATA_FILE" ] || break
+done
+
+# Display the embed info
+printf "\n"
+printf "${GREEN}==> Embed information:${WHITE}\n"
+printf "    Embed file = ${EMBED_FILE}\n"
+printf "    Data file = ${DATA_FILE}\n"
+printf "\n"
+
+# Check if we should post the article
+while true; do
+    read -ep "Everything look good? Embed data in file? (y/N): " embed
+    case $embed in
+        [Yy]* )
+            path="${EMBED_FILE%.*}"
+            ext="${EMBED_FILE##*.}"
+            new_file="${path}-secret.${ext}"
+
+            # Embed the data in the new file
+            cat $EMBED_FILE $DATA_FILE > $new_file
+
+            break;;
+        * )
+            printf "\nSkipping, data not embedded...\n\n"
+            break;;
+    esac
+done
