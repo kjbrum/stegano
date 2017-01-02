@@ -40,6 +40,8 @@ You can extract the embedded data by running the following on the resulting file
 unzip <filename>
 ```
 
+[Learn more about steganography.](https://en.wikipedia.org/wiki/Steganography)
+
 
 ## License
 
