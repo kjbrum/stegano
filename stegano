@@ -16,6 +16,15 @@ Embed data in files using steganography.
 Usage:
     $ stegano
 
+Options:
+    --data=<path/to/file>     Path to the data file that will be embedded
+    --embed=<path/to/file>    Path to the file to embed the data in
+    --help                    Display the help text
+
+Examples:
+    $ stegano
+    $ stegano --data=secret.zip --embed=image.jpg
+
 EOF
 exit 0
 }
@@ -55,16 +64,16 @@ if [ "$1" ]; then
         esac
     done
 else
-    # Get embed file
-    while true; do
-        read -ep "Embed file: " EMBED_FILE
-        [ -z "$EMBED_FILE" ] || break
-    done
-
     # Get data file
     while true; do
         read -ep "Data file: " DATA_FILE
         [ -z "$DATA_FILE" ] || break
+    done
+
+    # Get embed file
+    while true; do
+        read -ep "Embed file: " EMBED_FILE
+        [ -z "$EMBED_FILE" ] || break
     done
 fi
 

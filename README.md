@@ -20,6 +20,15 @@ Embed data in files using steganography.
 
 Usage:
     $ stegano
+
+Options:
+    --data=<path/to/file>     Path to the data file that will be embedded
+    --embed=<path/to/file>    Path to the file to embed the data in
+    --help                    Display the help text
+
+Examples:
+    $ stegano
+    $ stegano --data=secret.zip --embed=image.jpg
 ```
 
 
