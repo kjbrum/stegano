@@ -32,17 +32,41 @@ YELLOW=$(tput setaf 3);
 WHITE=$(tput setaf 7);
 RESET=$(tput sgr0);
 
-# Get embed file
-while true; do
-    read -ep "Embed file: " EMBED_FILE
-    [ -z "$EMBED_FILE" ] || break
-done
+# Variables
+EMBED_FILE=''
+DATA_FILE=''
 
-# Get data file
-while true; do
-    read -ep "Data file: " DATA_FILE
-    [ -z "$DATA_FILE" ] || break
-done
+# Parse the options
+if [ "$1" ]; then
+    for i in "$@"; do
+        case $i in
+            --data=*)
+                DATA_FILE="${i#*=}"
+                shift
+                ;;
+            --embed=*)
+                EMBED_FILE="${i#*=}"
+                shift
+                ;;
+            *)
+                printf "${RED}Error:${WHITE} Illegal task $i (see \"stegano --help\" for help)\n\n"
+                exit 1
+                ;;
+        esac
+    done
+else
+    # Get embed file
+    while true; do
+        read -ep "Embed file: " EMBED_FILE
+        [ -z "$EMBED_FILE" ] || break
+    done
+
+    # Get data file
+    while true; do
+        read -ep "Data file: " DATA_FILE
+        [ -z "$DATA_FILE" ] || break
+    done
+fi
 
 # Display the embed info
 printf "\n"
